@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: human-driver-webapp
+spec:
+  selector:
+    matchLabels:
+      app: human-driver-webapp
+  template:
+    metadata:
+      labels:
+        app: human-driver-webapp
+    spec:
+      containers:
+      - name: human-driver-webapp
+        env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+        image: quay.io/cloud-native-robotz-hackathon/human-driver-webapp:latest

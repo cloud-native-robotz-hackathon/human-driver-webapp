@@ -72,7 +72,7 @@ def generate_video_feed():
     while True:
         # wait until the lock is acquired
         with lock:
-            img_response = requests.get('http://terminator.robot.lan:5000/camera', verify=False)
+            img_response = requests.get('http://' + os.environ.get('NODE_NAME', 'localhost') + ':5000/camera', verify=False)
             output_frame = base64.b64decode(img_response.text)
 
             raw_image,(image_data, ratio, dwdh) = preprocess_encoded_image(img_response.text)
@@ -80,7 +80,7 @@ def generate_video_feed():
 
             objects = detect_objects(
                 image_data,
-                'http://192.168.66.64:8000/v2/models/robot_onnx/infer',
+                'http://server.triton.svc.cluster.local:8000/v2/models/robot_onnx/infer',
                 token='',
                 classes_count=len(class_labels),
                 confidence_threshold=0.15,
@@ -90,7 +90,7 @@ def generate_video_feed():
             app.logger.info('Detected obejects:')
             app.logger.info(pformat(objects))
             app.logger.info(pformat(objects.tolist()))
-            
+
             for (top, right, bottom, left, score, cls_id) in objects.tolist() :
                 name = class_labels[int(cls_id)]
                 app.logger.info(name)

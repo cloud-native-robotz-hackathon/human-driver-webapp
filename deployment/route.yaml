@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: human-driver-webapp
+  name: human-driver-webapp
+spec:
+  port:
+    targetPort: 5000-tcp
+  to:
+    kind: Service
+    name: human-driver-webapp
+    weight: 100
+  wildcardPolicy: None

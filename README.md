@@ -4,6 +4,21 @@ Simple web app show camera image boxes ;-)
 
 ![image](screenshot.png)
 
+## Build image
+
+```bash
+export IMAGE='quay.io/cloud-native-robotz-hackathon/human-driver-webapp:latest'    
+podman build --platform linux/amd64,linux/arm64  --manifest ${IMAGE}  .  
+podman manifest push ${IMAGE}
+```
+
+## Deployment
+
+
+```bash
+oc apply -k deployment/
+```
+
 ## Local development
 
 ```bash

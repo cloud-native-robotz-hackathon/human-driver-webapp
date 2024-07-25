@@ -1,0 +1,16 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: starterapp-python
+spec:
+  ports:
+  - protocol: TCP
+    name: 5002-tcp
+    port: 5002
+    targetPort: 5000
+  selector:
+    app: starterapp-python 
+  sessionAffinity: None
+  type: ClusterIP
+
